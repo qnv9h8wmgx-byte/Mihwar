@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مِحوَر | هويتك الرقمية المتكاملة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #09090e;
+            --card-dark: #12121a;
+            --card-inner: #1a1a24;
+            --gold: #d4af37;
+            --gold-gradient: linear-gradient(135deg, #e6c655 0%, #b89326 100%);
+            --text-white: #ffffff;
+            --text-muted: #9aa0b5;
+            --input-bg: #181822;
+            --border-glow: rgba(212, 175, 55, 0.15);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.25s ease;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .page {
+            width: 100%;
+            max-width: 440px;
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .btn-gold {
+            background: var(--gold-gradient);
+            color: #000000;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-white);
+            padding: 12px;
+            border-radius: 14px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--gold);
+        }
+        .card {
+            background: var(--card-dark);
+            border: 1px solid rgba(212, 175, 55, 0.08);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .form-input {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px;
+            border-radius: 12px;
+            color: #fff;
+            outline: none;
+            font-size: 14px;
+        }
+        .form-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px var(--border-glow);
+        }
+        .avatar-upload-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            object-fit: cover;
+            background: #1c1c24;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .file-label {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 700;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .file-label:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .profile-link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-inner);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px 20px;
+            border-radius: 16px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .profile-link-item:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+            transform: translateX(-4px);
+        }
+        .link-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .link-right i {
+            font-size: 18px;
+            width: 25px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pageLanding" class="page active">
+        <div style="text-align: center; margin: 50px 0 35px 0;">
+            <h1 style="font-size: 36px; margin-bottom: 12px; font-weight: 900; letter-spacing: 1px;">مِحوَبـ<span style="color:var(--gold);">ر</span></h1>
+            <div style="width: 50px; height: 3px; background: var(--gold); margin: 0 auto 20px auto; border-radius: 2px;"></div>
+            <p style="color: var(--text-white); font-size: 16px; font-weight: 600; margin-bottom: 8px;">بوابتك الرقمية الفاخرة لجمع أعمالك وحساباتك</p>
+            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.7; padding: 0 10px;">
+                منصة احترافية تتيح للمؤثرين، الشركات، والمستقلين إنشاء صفحة شخصية موحدة تضم كافة الروابط ووسائل التواصل الاجتماعي ببساطة تامة وبدون أي خبرة برمجية.
+            </p>
+        </div>
+        
+        <div class="card" style="background: rgba(255,255,255,0.02);">
+            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px;">
+                <i class="fas fa-id-card" style="color: var(--gold); font-size: 20px;"></i>
+                <span style="font-size: 14px; font-weight: 600;">صفحة موحدة تجمع حساباتك الاجتماعية بدقة.</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px;">
+                <i class="fas fa-image" style="color: var(--gold); font-size: 20px;"></i>
+                <span style="font-size: 14px; font-weight: 600;">رفع الصور مباشرة من الاستوديو وتعديل فوري.</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <i class="fas fa-database" style="color: var(--gold); font-size: 20px;"></i>
+                <span style="font-size: 14px; font-weight: 600;">تخزين آمن ومستمر لبياناتك داخل متصفحك.</span>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <button onclick="changePage('pageRegister')" class="btn-gold"><i class="fas fa-user-plus"></i> إنشاء حساب جديد مجاناً</button>
+            <button onclick="changePage('pageLogin')" class="btn-outline"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button>
+        </div>
+    </div>
+
+    <div id="pageRegister" class="page">
+        <div style="text-align: center; margin: 30px 0;">
+            <h2 style="font-size: 24px; font-weight: 700;">إنشاء حساب رسمي</h2>
+            <p style="color: var(--text-muted); font-size: 13px;">ابدأ ببناء هويتك الرقمية الفاخرة الآن</p>
+        </div>
+        <div class="card">
+            <div class="form-group">
+                <label>الاسم الكامل</label>
+                <input type="text" id="regName" class="form-input" placeholder="أدخل اسمك بالكامل">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني الرسمي</label>
+                <input type="email" id="regEmail" class="form-input" placeholder="name@company.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="regPass" class="form-input" placeholder="أنشئ كلمة مرور قوية">
+            </div>
+            <button onclick="handleRegister()" class="btn-gold"><i class="fas fa-check-circle"></i> تأكيد وإنشاء الحساب</button>
+        </div>
+        <button onclick="changePage('pageLanding')" class="btn-outline"><i class="fas fa-arrow-right"></i> العودة للخلف</button>
+    </div>
+
+    <div id="pageLogin" class="page">
+        <div style="text-align: center; margin: 30px 0;">
+            <h2 style="font-size: 24px; font-weight: 700;">تسجيل الدخول</h2>
+            <p style="color: var(--text-muted); font-size: 13px;">ادخل إلى لوحة التحكم الخاصة بك</p>
+        </div>
+        <div class="card">
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="loginEmail" class="form-input" placeholder="أدخل بريدك الإلكتروني">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="loginPass" class="form-input" placeholder="أدخل كلمة المرور">
+            </div>
+            <button onclick="handleLogin()" class="btn-gold"><i class="fas fa-sign-in-alt"></i> دخول النظام</button>
+        </div>
+        <button onclick="changePage('pageLanding')" class="btn-outline"><i class="fas fa-arrow-right"></i> العودة للخلف</button>
+    </div>
+
+    <div id="pageDashboard" class="page">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0 25px 0;">
+            <h2 style="font-size: 20px; font-weight: 700;"><i class="fas fa-sliders-h" style="color:var(--gold);"></i> لوحة التحكم الرسمية</h2>
+            <button onclick="logout()" style="background: none; border: none; color: #ff4d4d; font-weight: 700; cursor: pointer; font-size: 14px;"><i class="fas fa-power-off"></i> خروج</button>
+        </div>
+        
+        <div class="card">
+            <div class="avatar-upload-wrapper">
+                <img id="userAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="profile-avatar">
+                <label for="imageChooser" class="file-label"><i class="fas fa-camera"></i> تغيير الصورة من الاستوديو</label>
+                <input type="file" id="imageChooser" accept="image/*" style="display: none;" onchange="loadImage(event)">
+            </div>
+
+            <div class="form-group">
+                <label>الاسم المهني أو التجاري</label>
+                <input type="text" id="inputName" class="form-input" placeholder="مثال: أحمد الفهد | مطور برمجيات">
+            </div>
+
+            <div class="form-group">
+                <label>النبذة الشخصية (Bio)</label>
+                <textarea id="inputBio" class="form-input" style="height: 70px; resize: none;" placeholder="اكتب نبذة مختصرة عن أعمالك وخدماتك..."></textarea>
+            </div>
+
+            <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 15px;">
+                <p style="font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 12px;"><i class="fas fa-link"></i> ربط الحسابات الاجتماعية (أدخل الروابط كاملة):</p>
+                
+                <div class="form-group">
+                    <label><i class="fab fa-instagram"></i> رابط الانستغرام</label>
+                    <input type="text" id="inputInsta" class="form-input" placeholder="https://instagram.com/username">
+                </div>
+                <div class="form-group">
+                    <label><i class="fab fa-snapchat"></i> رابط السناب شات</label>
+                    <input type="text" id="inputSnap" class="form-input" placeholder="https://snapchat.com/add/username">
+                </div>
+                <div class="form-group">
+                    <label><i class="fab fa-linkedin"></i> رابط لينكد إن</label>
+                    <input type="text" id="inputLinkedin" class="form-input" placeholder="https://linkedin.com/in/username">
+                </div>
+                <div class="form-group">
+                    <label><i class="fab fa-whatsapp"></i> رابط الواتساب مباشر</label>
+                    <input type="text" id="inputWhatsapp" class="form-input" placeholder="https://wa.me/yournumber">
+                </div>
+            </div>
+
+            <button onclick="saveData()" class="btn-gold" style="margin-top: 10px;"><i class="fas fa-save"></i> حفظ وتحديث الهوية الرقمية</button>
+        </div>
+    </div>
+
+    <div id="pageViewProfile" class="page">
+        <div class="card" style="text-align: center; background: linear-gradient(180deg, #12121c 0%, #08080c 100%); border-color: var(--gold); margin-top: 20px;">
+            <img id="viewAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="profile-avatar" style="width:105px; height:105px; margin-bottom:15px;">
+            <h3 id="viewName" style="font-size: 22px; font-weight: 700; margin-bottom: 6px;"></h3>
+            <p id="viewBio" style="font-size: 13px; color: var(--text-muted); line-height: 1.6; padding: 0 10px; margin-bottom: 25px;"></p>
+            
+            <div id="socialLinks" class="links-grid">
+                </div>
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <button onclick="changePage('pageDashboard')" class="btn-gold" style="background: none; border: 1px solid var(--gold); color: #fff;"><i class="fas fa-edit"></i> تعديل البيانات</button>
+            <button onclick="changePage('pageLanding')" class="btn-outline"><i class="fas fa-home"></i> الرئيسية</button>
+        </div>
+    </div>
+
+    <script>
+        let avatarBase64 = "";
+
+        window.onload = function() {
+            if(localStorage.getItem('user_registered') === 'true') {
+                document.getElementById('inputName').value = localStorage.getItem('profile_name') || "";
+                document.getElementById('inputBio').value = localStorage.getItem('profile_bio') || "";
+                document.getElementById('inputInsta').value = localStorage.getItem('link_insta') || "";
+                document.getElementById('inputSnap').value = localStorage.getItem('link_snap') || "";
+                document.getElementById('inputLinkedin').value = localStorage.getItem('link_linkedin') || "";
+                document.getElementById('inputWhatsapp').value = localStorage.getItem('link_whatsapp') || "";
+                if(localStorage.getItem('profile_avatar')) {
+                    document.getElementById('userAvatar').src = localStorage.getItem('profile_avatar');
+                }
+            }
+        }
+
+        function changePage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if(pageId === 'pageViewProfile') { updateProfileView(); }
+        }
+
+        // خوێندنەوەی وێنە لە گەلەری بە شێوەی سیستمی ڕاستەقینە
+        function loadImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('userAvatar').src = reader.result;
+                avatarBase64 = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // دروستکردنی ئەکاونتی نوێ و پاشەکەوتکردن لای بەکارهێنەر
+        function handleRegister() {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const pass = document.getElementById('regPass').value.trim();
+
+            if(!name || !email || !pass) {
+                alert('يرجى ملء جميع الحقول الرسمية لإتمام التسجيل.');
+                return;
+            }
+
+            localStorage.setItem('user_registered', 'true');
+            localStorage.setItem('user_email', email);
+            localStorage.setItem('user_password', pass);
+            localStorage.setItem('profile_name', name);
+            localStorage.setItem('profile_bio', 'مرحباً بك في صفحتي الموحدة، يمكنك الاطلاع على روابطي بالأسفل.');
+            
+            document.getElementById('inputName').value = name;
+            document.getElementById('inputBio').value = 'مرحباً بك في صفحتي الموحدة، يمكنك الاطلاع على روابطي بالأسفل.';
+            
+            alert('تم إنشاء حسابك الرسمي بنجاح! يمكنك الآن ضبط هويتك.');
+            changePage('pageDashboard');
+        }
+
+        // لۆگین کردن
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+
+            if(localStorage.getItem('user_registered') === 'true') {
+                if(email === localStorage.getItem('user_email') && pass === localStorage.getItem('user_password')) {
+                    alert('تم تسجيل الدخول بنجاح.');
+                    changePage('pageDashboard');
+                } else {
+                    alert('خطأ: البريد الإلكتروني أو كلمة المرور غير مطابقة.');
+                }
+            } else {
+                alert('لا يوجد حساب مسجل بهذا البريد، يرجى إنشاء حساب جديد أولاً.');
+            }
+        }
+
+        // پاشەکەوتکردنی کۆتایی هەموو زانیارییەکان
+        function saveData() {
+            localStorage.setItem('profile_name', document.getElementById('inputName').value.trim());
+            localStorage.setItem('profile_bio', document.getElementById('inputBio').value.trim());
+            localStorage.setItem('link_insta', document.getElementById('inputInsta').value.trim());
+            localStorage.setItem('link_snap', document.getElementById('inputSnap').value.trim());
+            localStorage.setItem('link_linkedin', document.getElementById('inputLinkedin').value.trim());
+            localStorage.setItem('link_whatsapp', document.getElementById('inputWhatsapp').value.trim());
+            if(avatarBase64 !== "") {
+                localStorage.setItem('profile_avatar', avatarBase64);
+            }
+            alert('تم حفظ الهوية الرقمية بنجاح واعتماد الروابط الموحدة! 🎉');
+            changePage('pageViewProfile');
+        }
+
+        // پیشاندانی لایڤ و ڕێکخراوی هەموو لێنکەکان بەیەکەوە بە ئایکۆنی ڕەنگاوڕەنگ
+        function updateProfileView() {
+            const name = localStorage.getItem('profile_name') || "اسم المستخدم";
+            const bio = localStorage.getItem('profile_bio') || "لا يوجد نبذة تعريفية حالياً.";
+            const avatar = localStorage.getItem('profile_avatar') || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150";
+
+            document.getElementById('viewName').innerText = name;
+            document.getElementById('viewBio').innerText = bio;
+            document.getElementById('viewAvatar').src = avatar;
+
+            const linksContainer = document.getElementById('socialLinks');
+            linksContainer.innerHTML = ""; 
+
+            const insta = localStorage.getItem('link_insta');
+            const snap = localStorage.getItem('link_snap');
+            const linkedin = localStorage.getItem('link_linkedin');
+            const whatsapp = localStorage.getItem('link_whatsapp');
+
+            let hasLinks = false;
+
+            if(insta) {
+                linksContainer.innerHTML += `<a href="${insta}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-instagram" style="color:#e1306c;"></i><span>انستغرام الرسمي</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+            if(snap) {
+                linksContainer.innerHTML += `<a href="${snap}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-snapchat" style="color:#fffc00;"></i><span>سناب شات</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+            if(linkedin) {
+                linksContainer.innerHTML += `<a href="${linkedin}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-linkedin" style="color:#0077b5;"></i><span>حساب LinkedIn الاحترافي</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+            if(whatsapp) {
+                linksContainer.innerHTML += `<a href="${whatsapp}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-whatsapp" style="color:#25d366;"></i><span>تواصل مباشرة عبر واتساب</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+
+            if(!hasLinks) {
+                linksContainer.innerHTML = `<p style="color:var(--text-muted); font-size:13px; padding:10px 0;">لم يتم إضافة روابط اجتماعية بعد. قم بتعديل البيانات لإضافتها.</p>`;
+            }
+        }
+
+        function logout() {
+            alert('تم تسجيل الخروج من لوحة التحكم.');
+            changePage('pageLanding');
+        }
+    </script>
+</body>
+</html>
