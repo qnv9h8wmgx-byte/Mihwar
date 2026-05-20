@@ -1,0 +1,19 @@
+<script type="module">
+  // هێنانی پێداویستییەکان بە شێوازی CDN (بۆ وێب پێویستە)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCP95VdnXvP7ShSe9o5fh8iVSBAvSSqZ-s",
+    authDomain: "mihwar-b7269.firebaseapp.com",
+    projectId: "mihwar-b7269",
+    storageBucket: "mihwar-b7269.firebasestorage.app",
+    messagingSenderId: "972115287921",
+    appId: "1:972115287921:web:1c65682cd8166a8e1760d0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  // ئەمە بەشی لۆگینبوونەکە چالاک دەکات
+  window.auth = getAuth(app); 
+  console.log("Firebase is ready!");
+</script>
