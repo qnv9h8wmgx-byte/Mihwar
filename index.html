@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مِحوَر | هويتك الرقمية المتكاملة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #09090e;
+            --card-dark: #12121a;
+            --card-inner: #1a1a24;
+            --gold: #d4af37;
+            --gold-gradient: linear-gradient(135deg, #e6c655 0%, #b89326 100%);
+            --text-white: #ffffff;
+            --text-muted: #9aa0b5;
+            --input-bg: #181822;
+            --border-glow: rgba(212, 175, 55, 0.15);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.25s ease;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .page {
+            width: 100%;
+            max-width: 440px;
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .btn-gold {
+            background: var(--gold-gradient);
+            color: #000000;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-white);
+            padding: 12px;
+            border-radius: 14px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--gold);
+        }
+        .card {
+            background: var(--card-dark);
+            border: 1px solid rgba(212, 175, 55, 0.08);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .form-input {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px;
+            border-radius: 12px;
+            color: #fff;
+            outline: none;
+            font-size: 14px;
+        }
+        .form-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px var(--border-glow);
+        }
+        .avatar-upload-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            object-fit: cover;
+            background: #1c1c24;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .file-label {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 700;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .file-label:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .profile-link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-inner);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px 20px;
+            border-radius: 16px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .profile-link-item:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+            transform: translateX(-4px);
+        }
+        .link-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .link-right i {
+            font-size: 18px;
+            width: 25px;
+            text-align: center;
+        }
+        #shareContainer {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px dashed var(--gold);
+            padding: 15px;
+            border-radius: 14px;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+<body>
+
+    <div id="pageLanding" class="page active">
+        <div style="text-align: center; margin: 50px 0 35px 0;">
+            <h1 style="font-size: 36px; margin-bottom: 12px; font-weight: 900; letter-spacing: 1px;">مِحوَبـ<span style="color:var(--gold);">ر</span></h1>
+            <div style="width: 50px; height: 3px; background: var(--gold); margin: 0 auto 20px auto; border-radius: 2px;"></div>
+            <p style="color: var(--text-white); font-size: 16px; font-weight: 600; margin-bottom: 8px;">بوابتك الرقمية الفاخرة لجمع أعمالك وحساباتك</p>
+            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.7; padding: 0 10px;">
+                منصة احترافية تتيح للمؤثرين، الشركات، والمستقلين إنشاء صفحة شخصية موحدة تضم كافة الروابط ووسائل التواصل الاجتماعي ببساطة تامة وبدون أي خبرة برمجية.
+            </p>
+        </div>
+        
+        <div class="card" style="background: rgba(255,255,255,0.02);">
+            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px;">
+                <i class="fas fa-id-card" style="color: var(--gold); font-size: 20px;"></i>
+                <span style="font-size: 14px; font-weight: 600;">صفحة موحدة تجمع حساباتك الاجتماعية بدقة.</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px;">
+                <i class="fas fa-image" style="color: var(--gold); font-size: 20px;"></i>
+                <span style="font-size: 14px; font-weight: 600;">رفع الصور مباشرة من الاستوديو وتعديل فوري.</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <i class="fas fa-database" style="color: var(--gold); font-size: 20px;"></i>
+                <span style="font-size: 14px; font-weight: 600;">تخزين سحابي آمن ومستمر لجميع بياناتك.</span>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <button onclick="changePage('pageRegister')" class="btn-gold"><i class="fas fa-user-plus"></i> إنشاء حساب جديد مجاناً</button>
+            <button onclick="changePage('pageLogin')" class="btn-outline"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button>
+        </div>
+    </div>
+
+    <div id="pageRegister" class="page">
+        <div style="text-align: center; margin: 30px 0;">
+            <h2 style="font-size: 24px; font-weight: 700;">إنشاء حساب رسمي</h2>
+            <p style="color: var(--text-muted); font-size: 13px;">ابدأ ببناء هويتك الرقمية الفاخرة الآن</p>
+        </div>
+        <div class="card">
+            <div class="form-group">
+                <label>الاسم الكامل</label>
+                <input type="text" id="regName" class="form-input" placeholder="أدخل اسمك بالكامل">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني الرسمي</label>
+                <input type="email" id="regEmail" class="form-input" placeholder="name@company.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="regPass" class="form-input" placeholder="أنشئ كلمة مرور قوية">
+            </div>
+            <button onclick="handleRegister()" class="btn-gold"><i class="fas fa-check-circle"></i> تأكيد وإنشاء الحساب</button>
+        </div>
+        <button onclick="changePage('pageLanding')" class="btn-outline"><i class="fas fa-arrow-right"></i> العودة للخلف</button>
+    </div>
+
+    <div id="pageLogin" class="page">
+        <div style="text-align: center; margin: 30px 0;">
+            <h2 style="font-size: 24px; font-weight: 700;">تسجيل الدخول</h2>
+            <p style="color: var(--text-muted); font-size: 13px;">ادخل إلى لوحة التحكم الخاصة بك</p>
+        </div>
+        <div class="card">
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="loginEmail" class="form-input" placeholder="أدخل بريدك الإلكتروني">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="loginPass" class="form-input" placeholder="أدخل كلمة المرور">
+            </div>
+            <button onclick="handleLogin()" class="btn-gold"><i class="fas fa-sign-in-alt"></i> دخول النظام</button>
+        </div>
+        <button onclick="changePage('pageLanding')" class="btn-outline"><i class="fas fa-arrow-right"></i> العودة للخلف</button>
+    </div>
+
+    <div id="pageDashboard" class="page">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0 25px 0;">
+            <h2 style="font-size: 20px; font-weight: 700;"><i class="fas fa-sliders-h" style="color:var(--gold);"></i> لوحة التحكم الرسمية</h2>
+            <button onclick="logout()" style="background: none; border: none; color: #ff4d4d; font-weight: 700; cursor: pointer; font-size: 14px;"><i class="fas fa-power-off"></i> خروج</button>
+        </div>
+        
+        <div class="card">
+            <div class="avatar-upload-wrapper">
+                <img id="userAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="profile-avatar">
+                <label for="imageChooser" class="file-label"><i class="fas fa-camera"></i> تغيير الصورة من الاستوديو</label>
+                <input type="file" id="imageChooser" accept="image/*" style="display: none;" onchange="loadImage(event)">
+            </div>
+
+            <div class="form-group">
+                <label>الاسم المهني أو التجاري</label>
+                <input type="text" id="inputName" class="form-input" placeholder="مثال: أحمد الفهد | مطور برمجيات">
+            </div>
+
+            <div class="form-group">
+                <label>النبذة الشخصية (Bio)</label>
+                <textarea id="inputBio" class="form-input" style="height: 70px; resize: none;" placeholder="اكتب نبذة مختصرة عن أعمالك وخدماتك..."></textarea>
+            </div>
+
+            <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 15px;">
+                <p style="font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 12px;"><i class="fas fa-link"></i> ربط الحسابات الاجتماعية السبعة (أدخل الروابط كاملة):</p>
+                
+                <div class="form-group">
+                    <label><i class="fab fa-snapchat"></i> رابط السناب شات (Snapchat)</label>
+                    <input type="text" id="inputSnap" class="form-input" placeholder="https://snapchat.com/add/username">
+                </div>
+                <div class="form-group">
+                    <label><i class="fab fa-tiktok"></i> رابط تيك توك (TikTok)</label>
+                    <input type="text" id="inputTiktok" class="form-input" placeholder="https://tiktok.com/@username">
+                </div>
+                <div class="form-group">
+                    <label><i class="fab fa-telegram"></i> رابط تليجرام (Telegram)</label>
+                    <input type="text" id="inputTelegram" class="form-input" placeholder="https://t.me/username">
+                </div>
+                <div class="form-group">
+                    <label><i class="fab fa-facebook"></i> رابط فيسبوك (Facebook)</label>
+                    <input type="text" id="inputFacebook" class="form-input" placeholder="https://facebook.com/username">
+                </div>
+                <div class="form-group">
+                    <label><i class="fab fa-instagram"></i> رابط الانستغرام (Instagram)</label>
+                    <input type="text" id="inputInsta" class="form-input" placeholder="https://instagram.com/username">
+                </div>
+                <div class="form-group">
+                    <label><i class="fab fa-youtube"></i> رابط يوتيوب (YouTube)</label>
+                    <input type="text" id="inputYoutube" class="form-input" placeholder="https://youtube.com/@username">
+                </div>
+                <div class="form-group">
+                    <label><i class="fab fa-viber"></i> رابط فايبەر (Viber)</label>
+                    <input type="text" id="inputViber" class="form-input" placeholder="viber://contact?number=%2B9647500000000">
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 14px; border: 1px solid rgba(212,175,55,0.1);">
+                    <p style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 10px;"><i class="fas fa-plus-circle" style="color: var(--gold);"></i> رابط إضافي مخصص (اختياري)</p>
+                    <div class="form-group">
+                        <label>عنوان الرابط المخصص</label>
+                        <input type="text" id="inputCustomTitle" class="form-input" placeholder="مثال: موقعي الشخصي أو متجري">
+                    </div>
+                    <div class="form-group">
+                        <label>الرابط (URL)</label>
+                        <input type="text" id="inputCustomLink" class="form-input" placeholder="https://example.com">
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="saveData()" class="btn-gold" style="margin-top: 15px;"><i class="fas fa-save"></i> حفظ وتحديث الهوية الرقمية</button>
+            
+            <div id="shareContainer" style="display:none;">
+                <p style="font-size:12px; color:var(--text-white); margin-bottom:8px;">رابط صفحتك الشخصية الموحدة للبايو 👇</p>
+                <p id="bioLinkText" style="color:var(--gold); font-weight:700; font-size:13px; word-break:break-all;"></p>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('bioLinkText').innerText); alert('تم نسخ الرابط بنجاح!');" class="btn-outline" style="padding: 6px; margin-top: 8px; font-size: 12px;"><i class="fas fa-copy"></i> نسخ الرابط</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pageViewProfile" class="page">
+        <div class="card" style="text-align: center; background: linear-gradient(180deg, #12121c 0%, #08080c 100%); border-color: var(--gold); margin-top: 20px;">
+            <img id="viewAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="profile-avatar" style="width:105px; height:105px; margin-bottom:15px;">
+            <h3 id="viewName" style="font-size: 22px; font-weight: 700; margin-bottom: 6px;"></h3>
+            <p id="viewBio" style="font-size: 13px; color: var(--text-muted); line-height: 1.6; padding: 0 10px; margin-bottom: 25px;"></p>
+            
+            <div id="socialLinks" class="links-grid"></div>
+        </div>
+        
+        <div id="profileOwnerNav" style="display: flex; gap: 10px;">
+            <button onclick="changePage('pageDashboard')" class="btn-gold" style="background: none; border: 1px solid var(--gold); color: #fff;"><i class="fas fa-edit"></i> تعديل البيانات</button>
+            <button onclick="changePage('pageLanding')" class="btn-outline"><i class="fas fa-home"></i> الرئيسية</button>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyCP95VdnXvP7ShSe9o5fh8iVSBAvSSqZ-s",
+          authDomain: "mihwar-b7269.firebaseapp.com",
+          projectId: "mihwar-b7269",
+          storageBucket: "mihwar-b7269.firebasestorage.app",
+          messagingSenderId: "972115287921",
+          appId: "1:972115287921:web:1c65682cd8166a8e1760d0",
+          measurementId: "G-9N2C6ZDT27"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let avatarBase64 = "";
+        let currentUserUid = null;
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userParam = urlParams.get('u');
+
+            if (userParam) {
+                loadPublicProfile(userParam);
+            } else {
+                auth.onAuthStateChanged(user => {
+                    if (user) {
+                        currentUserUid = user.uid;
+                        loadUserData(user.uid);
+                    }
+                });
+            }
+        }
+
+        function changePage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if(pageId === 'pageViewProfile' && !new URLSearchParams(window.location.search).get('u')) { 
+                updateProfileViewLocal(); 
+            }
+        }
+
+        function loadImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('userAvatar').src = reader.result;
+                avatarBase64 = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // دروستکردنی ئەکاونت بە چارەسەری خەتاکان بۆ بەکارهێنەر
+        function handleRegister() {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const pass = document.getElementById('regPass').value.trim();
+
+            if(!name || !email || !pass) {
+                alert('يرجى ملء جميع الحقول الرسمية لإتمام التسجيل.');
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then((userCredential) => {
+                    const uid = userCredential.user.uid;
+                    db.collection("users").doc(uid).set({
+                        name: name,
+                        bio: 'مرحباً بك في صفحتي الموحدة، يمكنك الاطلاع على روابطي بالأسفل.',
+                        email: email,
+                        snap: "",
+                        tiktok: "",
+                        telegram: "",
+                        facebook: "",
+                        insta: "",
+                        youtube: "",
+                        viber: "",
+                        customTitle: "",
+                        customLink: "",
+                        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150"
+                    }).then(() => {
+                        alert('تم إنشاء حسابك بنجاح! يمكنك الآن ضبط هويتك الرقمية.');
+                        currentUserUid = uid;
+                        loadUserData(uid);
+                        changePage('pageDashboard');
+                    });
+                })
+                .catch((error) => {
+                    if (error.code === "auth/email-already-in-use") {
+                        alert('خطأ في التسجيل: هذا البريد الإلكتروني مستخدم بالفعل لحساب آخر.');
+                    } else if (error.code === "auth/weak-password") {
+                        alert('خطأ في التسجيل: كلمة المرور ضعيفة جداً، يجب أن تكون من 6 أحرف أو أكثر.');
+                    } else if (error.code === "auth/invalid-email") {
+                        alert('خطأ: البريد الإلكتروني غير صالح.');
+                    } else {
+                        alert('خطأ في التسجيل: ' + error.message);
+                    }
+                });
+        }
+
+        // لۆگین بە چاککردنی ئەو خەتایەی ناو وێنەکە (INVALID_LOGIN_CREDENTIALS)
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+
+            if(!email || !pass) {
+                alert('يرجى إدخال البريد وكلمة المرور.');
+                return;
+            }
+
+            auth.signInWithEmailAndPassword(email, pass)
+                .then((userCredential) => {
+                    alert('تم تسجيل الدخول بنجاح.');
+                    currentUserUid = userCredential.user.uid;
+                    loadUserData(currentUserUid);
+                    changePage('pageDashboard');
+                })
+                .catch((error) => {
+                    if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found" || error.message.includes("INVALID_LOGIN_CREDENTIALS")) {
+                        alert('خطأ في الدخول: البريد الإلكتروني أو كلمة المرور غير صحيحة.');
+                    } else if (error.code === "auth/invalid-email") {
+                        alert('خطأ: صيغة البريد الإلكتروني غير صحيحة.');
+                    } else {
+                        alert('حدث خطأ غير متوقع: ' + error.message);
+                    }
+                });
+        }
+
+        // هێنانەوەی تەواوی زانیارییە نوێیەکان لە فایربەیس
+        function loadUserData(uid) {
+            db.collection("users").doc(uid).get().then((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('inputName').value = data.name || "";
+                    document.getElementById('inputBio').value = data.bio || "";
+                    
+                    document.getElementById('inputSnap').value = data.snap || "";
+                    document.getElementById('inputTiktok').value = data.tiktok || "";
+                    document.getElementById('inputTelegram').value = data.telegram || "";
+                    document.getElementById('inputFacebook').value = data.facebook || "";
+                    document.getElementById('inputInsta').value = data.insta || "";
+                    document.getElementById('inputYoutube').value = data.youtube || "";
+                    document.getElementById('inputViber').value = data.viber || "";
+                    
+                    document.getElementById('inputCustomTitle').value = data.customTitle || "";
+                    document.getElementById('inputCustomLink').value = data.customLink || "";
+
+                    if(data.avatar) {
+                        document.getElementById('userAvatar').src = data.avatar;
+                    }
+                    
+                    const cleanEmail = data.email.replace(/[^a-zA-Z0-9]/g, "");
+                    const currentURL = window.location.href.split('?')[0];
+                    const fullBioLink = `${currentURL}?u=${cleanEmail}`;
+                    document.getElementById('bioLinkText').innerText = fullBioLink;
+                    document.getElementById('shareContainer').style.display = "block";
+                }
+            });
+        }
+
+        // پاشەکەوتکردنی داتا نوێیەکان بە بەشی یەدەگەوە
+        function saveData() {
+            if(!currentUserUid) return;
+
+            const updateData = {
+                name: document.getElementById('inputName').value.trim(),
+                bio: document.getElementById('inputBio').value.trim(),
+                snap: document.getElementById('inputSnap').value.trim(),
+                tiktok: document.getElementById('inputTiktok').value.trim(),
+                telegram: document.getElementById('inputTelegram').value.trim(),
+                facebook: document.getElementById('inputFacebook').value.trim(),
+                insta: document.getElementById('inputInsta').value.trim(),
+                youtube: document.getElementById('inputYoutube').value.trim(),
+                viber: document.getElementById('inputViber').value.trim(),
+                customTitle: document.getElementById('inputCustomTitle').value.trim(),
+                customLink: document.getElementById('inputCustomLink').value.trim()
+            };
+
+            if(avatarBase64 !== "") {
+                updateData.avatar = avatarBase64;
+            }
+
+            db.collection("users").doc(currentUserUid).update(updateData)
+                .then(() => {
+                    alert('تم حفظ الهوية الرقمية سحابياً بنجاح! 🎉');
+                    changePage('pageViewProfile');
+                })
+                .catch(err => alert('خطأ في الحفظ: ' + err.message));
+        }
+
+        function updateProfileViewLocal() {
+            if(!currentUserUid) return;
+            db.collection("users").doc(currentUserUid).get().then(doc => {
+                if(doc.exists) {
+                    renderProfileCard(doc.data());
+                    document.getElementById('profileOwnerNav').style.display = "flex";
+                }
+            });
+        }
+
+        // بارکردنی پرۆفایلی گشتی کاتێک کەسێکی تر لە دەرەوە سەردانی دەکات
+        function loadPublicProfile(cleanEmailParam) {
+            db.collection("users").get().then((querySnapshot) => {
+                let userFound = false;
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const currentCleanEmail = data.email.replace(/[^a-zA-Z0-9]/g, "");
+                    if(currentCleanEmail === cleanEmailParam) {
+                        userFound = true;
+                        renderProfileCard(data);
+                        document.getElementById('profileOwnerNav').style.display = "none"; // لێرەدا بەشی ڕێدایراکت و گەڕانەوە دەشارێتەوە بۆ ئەوەی تەنها پرۆفایلەکە ببینێت
+                        changePage('pageViewProfile');
+                    }
+                });
+                if(!userFound) {
+                    alert('الحساب غير موجود أو قد يكون الرابط خاطئاً.');
+                }
+            });
+        }
+
+        // ڕێندەرکردنی لینکەکان بەپێی ویستی تۆ بە شێوەیەکی زیرەک
+        function renderProfileCard(data) {
+            document.getElementById('viewName').innerText = data.name || "اسم المستخدم";
+            document.getElementById('viewBio').innerText = data.bio || "";
+            document.getElementById('viewAvatar').src = data.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150";
+
+            const linksContainer = document.getElementById('socialLinks');
+            linksContainer.innerHTML = "";
+
+            let hasLinks = false;
+
+            // 1. Snapchat
+            if(data.snap) {
+                linksContainer.innerHTML += `<a href="${data.snap}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-snapchat" style="color:#fffc00;"></i><span>سناب شات (Snapchat)</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+            // 2. TikTok
+            if(data.tiktok) {
+                linksContainer.innerHTML += `<a href="${data.tiktok}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-tiktok" style="color:#010101;"></i><span>تيك توك (TikTok)</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+            // 3. Telegram
+            if(data.telegram) {
+                linksContainer.innerHTML += `<a href="${data.telegram}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-telegram" style="color:#0088cc;"></i><span>تليجرام (Telegram)</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+            // 4. Facebook
+            if(data.facebook) {
+                linksContainer.innerHTML += `<a href="${data.facebook}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-facebook" style="color:#1877f2;"></i><span>فيسبوك (Facebook)</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+            // 5. Instagram
+            if(data.insta) {
+                linksContainer.innerHTML += `<a href="${data.insta}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-instagram" style="color:#e1306c;"></i><span>انستغرام (Instagram)</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+            // 6. YouTube
+            if(data.youtube) {
+                linksContainer.innerHTML += `<a href="${data.youtube}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-youtube" style="color:#ff0000;"></i><span>يوتيوب (YouTube)</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+            // 7. Viber
+            if(data.viber) {
+                linksContainer.innerHTML += `<a href="${data.viber}" target="_blank" class="profile-link-item"><div class="link-right"><i class="fab fa-viber" style="color:#7360f2;"></i><span>فايبەر (Viber)</span></div><i class="fas fa-chevron-left" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+
+            // بەشی یەدەگ: لینکی دڵخواز بە دیاریکردنی جۆری ئایکۆن بە شێوەیەکی زیرەک
+            if(data.customLink && data.customTitle) {
+                let lowerLink = data.customLink.toLowerCase();
+                let iconClass = "fas fa-globe"; // ئایکۆنی بنەڕەتی ئەگەر نەناسراو بێت
+                let iconColor = "var(--gold)";
+
+                // پشکنین بۆ ئەوەی بزانێت ئەپێکی ناسراوە لە ناو لینکی یەدەگدا؟
+                if(lowerLink.includes("twitter") || lowerLink.includes("x.com")) { iconClass = "fab fa-twitter"; iconColor = "#1da1f2"; }
+                else if(lowerLink.includes("github")) { iconClass = "fab fa-github"; iconColor = "#ffffff"; }
+                else if(lowerLink.includes("pinterest")) { iconClass = "fab fa-pinterest"; iconColor = "#bd081c"; }
+                else if(lowerLink.includes("discord")) { iconClass = "fab fa-discord"; iconColor = "#5865f2"; }
+
+                linksContainer.innerHTML += `<a href="${data.customLink}" target="_blank" class="profile-link-item"><div class="link-right"><i class="${iconClass}" style="color:${iconColor};"></i><span>${data.customTitle}</span></div><i class="fas fa-external-link-alt" style="font-size:12px; color:var(--text-muted);"></i></a>`;
+                hasLinks = true;
+            }
+
+            if(!hasLinks) {
+                linksContainer.innerHTML = `<p style="color:var(--text-muted); font-size:13px; padding:10px 0;">لم يتم إضافة روابط اجتماعية بعد.</p>`;
+            }
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                alert('تم تسجيل الخروج من لوحة التحكم.');
+                currentUserUid = null;
+                changePage('pageLanding');
+            });
+        }
+    </script>
+</body>
+</html>
